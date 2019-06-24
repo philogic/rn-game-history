@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { FlatList } from 'react-native';
+import { Header, ListItem } from 'react-native-elements';
 import * as firebase from 'firebase';
 import { firebaseConfig } from './config';
 
@@ -13,7 +14,22 @@ export default class App extends React.Component<> {
     this.state = { games: [] }
   }
 
-  keyExtractor = (item) => item.id;
+  keyExtractor = (item, index) => index.toString();
+
+  renderItem = ({ item }) => (
+    <ListItem
+      title={`Round ${item.round}`}
+      subtitle={
+        `Computer Score ${item.computerScore}   Human Score ${item.humanScore}`
+      }
+    />
+  );
+
+  renderHeader = () => (
+    <Header
+      centerComponent={{text: 'GAME HISTORY',}}
+    />
+  );
 
   listenForItems(itemsDb) {
     itemsDb.on('value', (snap) => {
@@ -28,7 +44,7 @@ export default class App extends React.Component<> {
       });
 
       this.setState({games: items});
-      console.log(this.state);
+      //console.log(this.state);
     });
   }
 
@@ -38,9 +54,12 @@ export default class App extends React.Component<> {
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <FlatList
+        ListHeaderComponent={this.renderHeader}
+        keyExtractor={this.keyExtractor}
+        data={this.state.games}
+        renderItem={this.renderItem}
+      />
     );
   }
 }
