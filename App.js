@@ -8,9 +8,34 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class App extends React.Component<> {
   constructor(props) {
-    super(props)
+    super(props);
     this.itemsDb = firebaseApp.database().ref('/Games');
+    this.state = { games: [] }
   }
+
+  keyExtractor = (item) => item.id;
+
+  listenForItems(itemsDb) {
+    itemsDb.on('value', (snap) => {
+      let items = [];
+      snap.forEach((child) => {
+        items.push({
+          id: child.key,
+          round: child.val().round,
+          computerScore: child.val().computerScore,
+          humanScore: child.val().humanScore
+        });
+      });
+
+      this.setState({games: items});
+      console.log(this.state);
+    });
+  }
+
+  componentDidMount() {
+    this.listenForItems(this.itemsDb)
+  }
+
   render() {
     return (
       <View style={styles.container}>
