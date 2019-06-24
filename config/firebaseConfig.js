@@ -1,11 +1,21 @@
+import {
+  API_KEY,
+  AUTH_DOMAIN,
+  DATABASE_URL,
+  PROJECT_ID,
+  STORAGE_BUCKET,
+  MESSAGING_SENDER_ID,
+  APP_ID
+} from "react-native-dotenv"
+
 const firebaseConfig = {
-  apiKey: "AIzaSyAD8ueqe9xJwOqdhETRndWnfvafakZS734",
-  authDomain: "rn-game.firebaseapp.com",
-  databaseURL: "https://rn-game.firebaseio.com",
-  projectId: "rn-game",
-  storageBucket: "rn-game.appspot.com",
-  messagingSenderId: "780396349143",
-  appId: "1:780396349143:web:beb84adc72949fc9"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  databaseURL: DATABASE_URL,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID
 };
 
 export default firebaseConfig;
